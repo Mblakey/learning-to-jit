@@ -11,42 +11,6 @@
 char c_buffer[16384] = {0}; 
 char local[4096] = {0}; 
 
-#if 0
-void jit_compile_and_run(JitContext *ctx, const char *emitted_src) {
-  TCCState *tcc = tcc_new();
-
-  // Output to memory - no temp files, no disk
-  tcc_set_output_type(tcc, TCC_OUTPUT_MEMORY);
-
-  // // Point tcc at the header search path we found in the Makefile
-  // tcc_add_include_path(tcc, LIBTCC_INCLUDE_PATH);
-
-  if (tcc_compile_string(tcc, emitted_src) == -1) {
-      fprintf(stderr, "JIT compilation failed\n");
-      tcc_delete(tcc);
-      return;
-  }
-
-  // Relocate into an in-process executable region
-  // TCC handles the mmap, permissions, everything
-  if (tcc_relocate(tcc, TCC_RELOCATE_AUTO) == -1) {
-      fprintf(stderr, "JIT relocation failed\n");
-      tcc_delete(tcc);
-      return;
-  }
-
-  // Pull the function pointer directly out of the compiled image
-  void (*jit_body)(JitContext *) = tcc_get_symbol(tcc, "jit_body");
-
-  if (jit_body)
-    jit_body(ctx);
-
-  // TCC owns the memory region - delete frees it
-  tcc_delete(tcc);
-}
-#endif
-
-
 static void mkb_emit_C(mkb_ast_node *n, int depth, int loop_cnt)
 {
   switch (n->kind) {

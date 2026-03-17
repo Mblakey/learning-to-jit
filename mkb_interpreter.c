@@ -207,8 +207,8 @@ static void mkb_interpreter(mkb_ast_node *restrict root)
       
       /* JIT LOGIC */
       case LOOP_KIND: {
-#if USE_JIT
 
+#if USE_JIT
         strcat(c_buffer, "#include <stdlib.h>\n");
         strcat(c_buffer, "#include <stdio.h>\n");
 
