@@ -16,7 +16,8 @@ typedef struct strhash_entry {
   struct strhash_entry *next; 
   void  *value; 
   unsigned char key[8];
-  size_t keylen;
+  unsigned int keylen;
+  unsigned int flags;
 } strhash_entry; 
 
 
@@ -86,7 +87,7 @@ static bool strhash_table_store(strhash_entry *restrict hash_table[],
 }
 
 
-static void* strhash_table_load(strhash_entry *restrict hash_table[], const char *key, size_t keylen)
+static strhash_entry* strhash_table_load(strhash_entry *restrict hash_table[], const char *key, size_t keylen)
 {
   uint16_t hash_idx = strhash_entry_hash(key); 
   strhash_entry *slot = hash_table[hash_idx]; 
@@ -94,7 +95,7 @@ static void* strhash_table_load(strhash_entry *restrict hash_table[], const char
     if (slot->keylen == keylen && 
         memcmp(key, slot->key, keylen) == 0) 
     {
-      return slot->value; 
+      return slot; 
     }
     slot = slot->next; 
   }

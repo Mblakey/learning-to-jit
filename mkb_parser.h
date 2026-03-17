@@ -52,8 +52,9 @@ typedef struct mkb_ast_edge {
 
 /* tagged union AST node */
 typedef struct mkb_ast_node {
+  mkb_ast_edge *children;
   enum mkb_ast_node_kind kind; 
-  mkb_ast_edge *children;  
+
   union {
     struct { /* operator */
       enum mkb_op_type op_code; 
@@ -84,8 +85,6 @@ typedef struct mkb_ast_node {
 mkb_ast_node* mkb_loop_stmt(mkb_ast_node *restrict);
 mkb_ast_node* mkb_operator_lft(mkb_ast_node *restrict); 
 mkb_ast_node* mkb_operator_rgt(mkb_ast_node *restrict); 
-
-
 
 const char* mkb_ast_node_type(mkb_ast_node *restrict);
 

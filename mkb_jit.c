@@ -147,8 +147,8 @@ int main() {
   tcc_compile_string(tcc, c_buffer);
   tcc_relocate(tcc, TCC_RELOCATE_AUTO);
 
-  void (*fn)() = tcc_get_symbol(tcc, "jit_func");
-  fn();
+  void (*fn)(void *ctx) = tcc_get_symbol(tcc, "jit_func");
+  fn(NULL);
 
   tcc_delete(tcc);
 

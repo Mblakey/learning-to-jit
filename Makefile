@@ -26,7 +26,7 @@ mkb-jit: mkb_jit.c mkb_parser.o
 	$(CC) $(CFLAGS) $(LIBTCC_CFLAGS) mkb_jit.c mkb_parser.o -o mkb-jit $(LIBTCC)
 
 mkb-interpret: mkb_interpreter.c mkb_parser.o
-	$(CC) $(CFLAGS) mkb_interpreter.c mkb_parser.o -o mkb-interpret
+	$(CC) $(CFLAGS) $(LIBTCC_FLAGS) mkb_interpreter.c mkb_parser.o -o mkb-interpret $(LIBTCC)
 
 clean:
 	$(RM) mkb_parser.o
